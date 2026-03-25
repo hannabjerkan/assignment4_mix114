@@ -127,19 +127,33 @@ async function fetchRandomCocktail() {
   const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php')
   const data = await response.json();
   console.log(data);
-  return data.drink[0]
+  return data.drinks[0]
 }
 
 /*
 Display Cocktail Data in the DOM
 */
 function displayCocktailData(cocktail) {
-  
   const cocktailContainer= document.getElementById('cocktail-container')
 
+  let cocktailIngrediantList =''
+
+  for (let i = 1; i<=20; i++) {
+  let ingredient = cocktail[`strIngredient${i}`];
+  let measure = cocktail[`strMeasure${i}`];
+
+  if (ingredient && ingredient.trim() !=='') {
+    cocktailIngrediantList += `<li>${ingredient} - ${measure} </li>`;
+  }  
+}
+
   cocktailContainer.innerHTML= `
-  <h2>${cocktail.strDrink}</h2>
+  <h2>Your matching cocktail: ${cocktail.strDrink}</h2>
   <img src='${cocktail.strDrinkThumb}' alt='${cocktail.strDrink}'/>
+  <h3>Ingredients:</h3>
+  <ul>${cocktailIngrediantList}</ul>
+  <h3>Instructions</h3>
+  <p>${cocktail.strInstructions}
   `
 
 }
