@@ -50,14 +50,17 @@ Fetch a Random Meal from TheMealDB
 Returns a Promise that resolves with the meal object
  */
 function fetchRandomMeal() {
-    // Fill in: fetch -> konvertere til json -> select one meal randomly -> returnere
+    
+  // Fill in: fetch -> konvertere til json -> select one meal randomly -> returnere
     return fetch('https://www.themealdb.com/api/json/v1/1/random.php')    //linken sender request til API
       .then((response) => response.json())       //gjør om svaret til json 
       .then((data) => {       
         console.log(data);    //får det inn i console
-        return data.meals[0];     //hente ut flrste element 
+        return data.meals[0];     //hente ut flrste element (tilfeldig)
       });
 }
+
+/*  IDA SITT FORSLAG - MODERNE FETCHING
 async function fetchRandomMeal() {
   const response = await fetch('https://www.themealdb.com/api/json/v1/1/random.php');
   const data = await response.json();
@@ -65,6 +68,7 @@ async function fetchRandomMeal() {
   //legg in fuunksjons-kall som data skal brukes i her
   displayMealData(data);
 };
+*/
 
 /*
 Display Meal Data in the DOM
@@ -76,10 +80,28 @@ function displayMealData(meal) {    //dette vil puttes i meal-container på html
     // Fill in: finne kontainer -> 
     const container = document.getElementById('meal-container');
 
+//loop på ingredisensene for å koble ingrediens med mål. legges så inn i container.innerHTML
+let ingredientList ='';
+
+for (let i = 1; i<=20; i++) {
+  const ingredient = meal[`strIngredient${i}`];
+  const measure = meal[`strMeasure${i}`];
+
+  if (ingredient && ingredient.trim() !=='') {
+    ingredientList += `<li>${ingredient} - ${measure} </li>`;
+  }  
+}
+
 container.innerHTML = `
         <h2>${meal.strMeal}</h2>
         <p>Category: ${meal.strCategory}</p>
         <img src='${meal.strMealThumb}' alt='${meal.strMeal}'/>
+
+        <h3>Ingredients:</h3>
+        <ul>${ingredientList}</ul>
+
+        <h3>Instructions</h3>
+        <p>${meal.strInstructions}</p>
     `;
   }
 
