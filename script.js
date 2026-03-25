@@ -22,12 +22,12 @@ const mealCategoryToCocktailIngredient = {
 
 /*
     2) Main Initialization Function
-       Called on page load to start all the requests:
-       - Fetch random meal
-       - Display meal
-       - Map meal category to spirit
-       - Fetch matching (or random) cocktail
-       - Display cocktail
+      Called on page load to start all the requests:
+      - Fetch random meal
+      - Display meal
+      - Map meal category to spirit
+      - Fetch matching (or random) cocktail
+      - Display cocktail
 */
 function init() {
   fetchRandomMeal()
@@ -46,8 +46,8 @@ function init() {
 }
 
 /*
- Fetch a Random Meal from TheMealDB
- Returns a Promise that resolves with the meal object
+Fetch a Random Meal from TheMealDB
+Returns a Promise that resolves with the meal object
  */
 function fetchRandomMeal() {
     // Fill in: fetch -> konvertere til json -> select one meal randomly -> returnere
@@ -58,6 +58,13 @@ function fetchRandomMeal() {
         return data.meals[0];     //hente ut flrste element 
       });
 }
+async function fetchRandomMeal() {
+  const response = await fetch('https://www.themealdb.com/api/json/v1/1/random.php');
+  const data = await response.json();
+
+  //legg in fuunksjons-kall som data skal brukes i her
+  displayMealData(data);
+};
 
 /*
 Display Meal Data in the DOM
