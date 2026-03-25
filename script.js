@@ -51,6 +51,8 @@ Returns a Promise that resolves with the meal object
 async function fetchRandomMeal() {
   const response = await fetch('https://www.themealdb.com/api/json/v1/1/random.php')
   const data = await response.json()
+
+  //legg in fuunksjons-kall som data skal brukes i her
 }
 
 /*
