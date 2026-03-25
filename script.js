@@ -49,18 +49,11 @@ function init() {
 Fetch a Random Meal from TheMealDB
 Returns a Promise that resolves with the meal object
  */
-function fetchRandomMeal() {
-    // Fill in: fetch -> konvertere til json -> select one meal randomly -> returnere
-    return fetch('https://www.themealdb.com/api/json/v1/1/random.php')    //linken sender request til API
-      .then((response) => response.json())       //gjør om svaret til json 
-      .then((data) => {       
-        console.log(data);    //får det inn i console
-        return data.meals[0];     //hente ut flrste element 
-      });
-}
+
 async function fetchRandomMeal() {
   const response = await fetch('https://www.themealdb.com/api/json/v1/1/random.php');
   const data = await response.json();
+  return data.meals[0];
 };
 
 /*
@@ -96,7 +89,11 @@ We call https://www.thecocktaildb.com/api/json/v1/1/search.php?s=DRINK_INGREDIEN
 Don't forget encodeURIComponent()
 If no cocktails found, fetch random
 */
-function fetchCocktailByDrinkIngredient(drinkIngredient) {
+async function fetchCocktailByDrinkIngredient(drinkIngredient) {
+  const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${drinkIngredient}`);
+  const data = await response.json();
+  console.log(data);
+  return data.drink[0];
     // Fill in
 }
 
@@ -104,8 +101,11 @@ function fetchCocktailByDrinkIngredient(drinkIngredient) {
 Fetch a Random Cocktail (backup in case nothing is found by the search)
 Returns a Promise that resolves to cocktail object
 */
-function fetchRandomCocktail() {
-    // Fill in
+async function fetchRandomCocktail() {
+  const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php')
+  const data = await response.json();
+  console.log(data);
+  return data.drink[0]
 }
 
 /*
