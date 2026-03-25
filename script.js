@@ -115,7 +115,7 @@ async function fetchCocktailByDrinkIngredient(drinkIngredient) {
   const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${drinkIngredient}`);
   const data = await response.json();
   console.log(data);
-  return data;
+  return data.drinks[0];
     // Fill in
 }
 
@@ -134,7 +134,14 @@ async function fetchRandomCocktail() {
 Display Cocktail Data in the DOM
 */
 function displayCocktailData(cocktail) {
-    // Fill in
+  
+  const cocktailContainer= document.getElementById('cocktail-container')
+
+  cocktailContainer.innerHTML= `
+  <h2>${cocktail.strDrink}</h2>
+  <img src='${cocktail.strDrinkThumb}' alt='${cocktail.strDrink}'/>
+  `
+
 }
 
 /*
