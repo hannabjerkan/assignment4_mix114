@@ -31,7 +31,8 @@ const mealCategoryToCocktailIngredient = {
 */
 function init() {
   fetchRandomMeal()
-    .then((meal) => {
+    .then((meal) => {       //meal er objektet vi henter fra API i neste funksjon 
+      console.log('MEAL:', meal);   //for å sjekke i console at det fungerer 
       displayMealData(meal);
       const spirit = mapMealCategoryToDrinkIngredient(meal.strCategory);
       return fetchCocktailByDrinkIngredient(spirit);
@@ -48,6 +49,15 @@ function init() {
 Fetch a Random Meal from TheMealDB
 Returns a Promise that resolves with the meal object
  */
+function fetchRandomMeal() {
+    // Fill in: fetch -> konvertere til json -> select one meal randomly -> returnere
+    return fetch('https://www.themealdb.com/api/json/v1/1/random.php')    //linken sender request til API
+      .then((response) => response.json())       //gjør om svaret til json 
+      .then((data) => {       
+        console.log(data);    //får det inn i console
+        return data.meals[0];     //hente ut flrste element 
+      });
+}
 async function fetchRandomMeal() {
   const response = await fetch('https://www.themealdb.com/api/json/v1/1/random.php');
   const data = await response.json();
@@ -59,9 +69,16 @@ Receives a meal object with fields like:
   strMeal, strMealThumb, strCategory, strInstructions,
   strIngredientX, strMeasureX, etc.
 */
-function displayMealData(meal) {
-    // Fill in
-}
+function displayMealData(meal) {    //dette vil puttes i meal-container på html 
+    // Fill in: finne kontainer -> 
+    const container = document.getElementById('meal-container');
+
+container.innerHTML = `
+        <h2>${meal.strMeal}</h2>
+        <p>Category: ${meal.strCategory}</p>
+        <img src='${meal.strMealThumb}' alt='${meal.strMeal}'/>
+    `;
+  }
 
 /*
 Convert MealDB Category to a TheCocktailDB Spirit
