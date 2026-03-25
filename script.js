@@ -46,13 +46,17 @@ function init() {
 }
 
 /*
-Fetch a Random Meal from TheMealDB
+Fetch a Random Meal from TheMealDB. 
 Returns a Promise that resolves with the meal object
- */
+*/
 
-async function fetchRandomMeal() {
+async function fetchRandomMeal() {    //async funksjoner returnerer alltid en promise
   const response = await fetch('https://www.themealdb.com/api/json/v1/1/random.php');
   const data = await response.json();
+
+  console.log(data);  //for debugging 
+
+  //returnerer første og tilfeldige måltid
   return data.meals[0];
 };
 
@@ -66,10 +70,28 @@ function displayMealData(meal) {    //dette vil puttes i meal-container på html
     // Fill in: finne kontainer -> 
     const container = document.getElementById('meal-container');
 
+//loop på ingredisensene for å koble ingrediens med mål. legges så inn i container.innerHTML
+let ingredientList ='';
+
+for (let i = 1; i<=20; i++) {
+  const ingredient = meal[`strIngredient${i}`];
+  const measure = meal[`strMeasure${i}`];
+
+  if (ingredient && ingredient.trim() !=='') {
+    ingredientList += `<li>${ingredient} - ${measure} </li>`;
+  }  
+}
+
 container.innerHTML = `
         <h2>${meal.strMeal}</h2>
         <p>Category: ${meal.strCategory}</p>
         <img src='${meal.strMealThumb}' alt='${meal.strMeal}'/>
+
+        <h3>Ingredients:</h3>
+        <ul>${ingredientList}</ul>
+
+        <h3>Instructions</h3>
+        <p>${meal.strInstructions}</p>
     `;
   }
 
