@@ -2,6 +2,7 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 100px auto;
+  grid-gap: 20px;     /*ekstra styling*/
   font-family: sans-serif;
   margin: 20px;
 }
@@ -12,7 +13,7 @@ body {
 .meal,
 .cocktail {
   border: 1px solid #ccc;
-  padding: 15px;
+  padding: 25px;
   margin-bottom: 20px;
   border-radius: 8px;
 }
