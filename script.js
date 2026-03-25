@@ -115,7 +115,7 @@ async function fetchCocktailByDrinkIngredient(drinkIngredient) {
   const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${drinkIngredient}`);
   const data = await response.json();
   console.log(data);
-  return data.drink[0];
+  return data;
     // Fill in
 }
 
